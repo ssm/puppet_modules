@@ -1,30 +1,10 @@
 # Module: keepalived
 # Class: keepalived
-# Control keepalived VRRP instances (failover IP addresses and routes) between servers.
+# Install keepalived, handle service and global configuration
 # 
-# Example code:
-# (begin code)
-# include keepalived
-# keepalived::vrrp_instance { 
-# 
-#   "eth0":
-#     virtual_ipaddress => "192.0.2.1/32";
-# 
-#   "eth0-foo":
-#     ensure            => absent,
-#     interface         => "eth0",
-#     virtual_ipaddress => ["192.0.2.2/32",
-#                           "192.0.2.3/32"];
-# 
-#   "eth0-bar":
-#     interface         => "eth0",
-#     virtual_ipaddress => ["192.0.2.4/32"],
-#     virtual_routes    => ["192.0.2.128/30",
-#                           "192.0.2.132/30 via 102.0.2.130"
-#                           "unreachable 192.0.2.192/26"];
-# 
-#  }
-# (end)
+# Note: You need keepalived >= 1.1.14.  Older versions do not support the
+# "include" statement.
+#
 class keepalived {
   package {"keepalived":
     ensure => installed,
