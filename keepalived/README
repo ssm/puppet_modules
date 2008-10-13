@@ -1,0 +1,40 @@
+==============================
+ Puppet module for keepalived
+==============================
+
+This is a module to install and control keepalived.
+
+Limited functionality
+=====================
+
+For the moment, it will just control VRRP instances.  That'll give you IP
+address and routing failover between nodes.  No IPVS support is added yet.
+
+Requirements
+============
+
+This module requires keepalived version 1.1.14 or higher, to support the
+"include" statement.
+
+Example
+=======
+
+include keepalived
+keepalived::vrrp_instance { 
+
+  "eth0":
+    virtual_ipaddress => "192.0.2.1/32";
+
+  "eth0-foo":
+    ensure            => absent,
+    interface         => "eth0",
+    virtual_ipaddress => ["192.0.2.2/32",
+                          "192.0.2.3/32"];
+
+  "eth0-bar":
+    interface         => "eth0",
+    virtual_ipaddress => ["192.0.2.4/32"],
+    virtual_routes    => ["192.0.2.128/30",
+                          "192.0.2.132/30 via 102.0.2.130"
+                          "unreachable 192.0.2.192/26"];
+}
