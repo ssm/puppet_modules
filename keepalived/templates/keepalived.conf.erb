@@ -1,0 +1,11 @@
+global_defs {
+  notification_email {
+    root@<%= fqdn %>
+  }
+  notification_email_from root@<%= fqdn %>
+  smtp_server             localhost
+  smtp_connect_timeout    30
+  lvs_id                  <%= fqdn %>
+}
+
+include keepalived.d/*.conf

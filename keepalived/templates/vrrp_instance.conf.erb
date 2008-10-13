@@ -1,0 +1,56 @@
+<%
+  def virtual_ipaddress_lines
+    lines = []
+    lines << "  virtual_ipaddress {"
+    virtual_ipaddress.to_a.flatten.each { |line|
+      ## Syntax check lines here
+      lines << "    %s" % line
+    }
+    lines << "  }"
+
+    return lines.join("\n")
+  end
+
+  def virtual_routes_lines
+    lines = []
+    unless virtual_routes == :undef
+      lines << "  virtual_routes {"
+      virtual_routes.to_a.flatten.each { |line|
+        ## Syntax check lines here
+        lines << "    %s" % line
+      }
+      lines << "  }"
+    end
+    return lines.join("\n")
+  end
+
+  def interface_name
+    if interface == :undef
+      return name
+    else
+      return interface
+    end
+  end
+
+%>
+
+vrrp_instance <%= name %> {
+  state                     BACKUP
+  interface                 <%= interface_name %>
+  lvs_sync_daemon_interface <%= interface_name %>
+  virtual_router_id         <%= virtual_router_id %>
+  priority                  <%= priority %>
+  advert_int                1
+  smtp_alert
+<% unless mcast_src_ip == :undef %>
+  mcast_src_ip              <%= mcast_src_ip %>
+<% end %>
+
+  authentication {
+    auth_type AH
+  }
+
+<%= virtual_ipaddress_lines %>
+<%= virtual_routes_lines %>
+
+}
