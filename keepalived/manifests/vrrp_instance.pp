@@ -5,23 +5,23 @@
 # Example code:
 # (begin code)
 # include keepalived
-# keepalived::vrrp_instance { 
-# 
+# keepalived::vrrp_instance {
+#
 #   "vlan101":
 #     virtual_ipaddress => "192.0.2.1/32";
-# 
+#
 #   "vlan101-foo":
 #     ensure            => absent,
 #     interface         => "vlan101",
 #     virtual_ipaddress => ["192.0.2.2/32",
 #                           "192.0.2.3/32"];
-# 
+#
 #   "vlan102":
 #     virtual_ipaddress => ["192.0.2.4/32"],
 #     virtual_routes    => ["192.0.2.128/30",
 #                           "192.0.2.132/30 via 102.0.2.130"
 #                           "unreachable 192.0.2.192/26"];
-# 
+#
 #  }
 # (end)
 define keepalived::vrrp_instance($ensure=present,
@@ -34,7 +34,7 @@ define keepalived::vrrp_instance($ensure=present,
 
   file {"/etc/keepalived/keepalived.d/keepalived_$name.conf":
     ensure  => $ensure,
-    content => template("/root/vrrp_instance.conf.erb"),
+    content => template("keepalived/vrrp_instance.conf.erb"),
     require => Package["keepalived"],
     notify  => Exec["/etc/init.d/keepalived reload"],
   }

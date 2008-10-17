@@ -20,7 +20,7 @@ Example
 =======
 
 include keepalived
-keepalived::vrrp_instance { 
+keepalived::vrrp_instance {
 
   "vlan101":
     virtual_ipaddress => "192.0.2.1/32";
