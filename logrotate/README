@@ -1,0 +1,22 @@
+A custom definition for log rotation with logrotate:
+
+Parameters:
+  logfiles
+  interval: "daily", "weekly" or "monthly". Default: "daily"
+  dateext: true or false, default: true
+  compress: true or false: default: true
+  delaycompress: true or false, default: true
+  sharedscripts: true or false, default: true
+  rotate: a postitive integer, default:7
+  postrotate: false, or a string refering to a command to run: default: false
+  customlines: an array containing any other configuration lines for logrotate, or comments
+
+Example:
+
+# logrotate::conf { "foo":
+#   logfiles => "/var/log/foo.log",
+#   postrotate => "/etc/init.d/foo reload",
+#   sharedscripts => false,
+# 
+#   customlines => ["# foo", "# bar"]
+# }

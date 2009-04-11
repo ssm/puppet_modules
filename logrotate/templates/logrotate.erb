@@ -1,0 +1,17 @@
+# Logrotate script for <%= name %>
+<%= logfiles %>
+  <%= interval %>
+  rotate <%= rotate %>
+  <%= compress      ? "compress"      : ""  %>
+  <%= delaycompress ? "delaycompress" : ""  %>
+  <%= sharedscripts ? "sharedscripts" : ""  %>
+
+<% unless postrotate == false -%>
+  postrotate
+    <%= postrotate %>
+  endscript
+<% end -%>
+
+<% customlines.flatten.each do |line| -%>
+  <%= line %>
+<% end -%>
